@@ -44,11 +44,25 @@ var clearImage = function () {
   }
 };
 
+var closeToBottom = function () {
+  var documentHeight = $(document).height();
+  var windowHeight = $(window).height();
+  var topHeight = $(window).scrollTop();
+  return topHeight > (documentHeight - windowHeight)/3*2;
+} ;
+
+var request = function() {
+    if (closeToBottom()) {
+      pageNumber += 1;
+      searchFlickr(pageNumber);
+    };
+  };
+
 $(document).ready(function () {
 
   $('#search').on('click', function() {
     clearImage();
-    searchFlickr();
+    searchFlickr(pageNumber);
     });  
 
   $('#query').on('keypress',function(event) {
@@ -57,9 +71,10 @@ $(document).ready(function () {
       return;
     } 
     clearImage();
-    searchFlickr();
+    searchFlickr(pageNumber);
   });
 
+  $(window).on('scroll', request);
 });
 
 
