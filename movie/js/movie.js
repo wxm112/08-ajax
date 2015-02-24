@@ -7,11 +7,14 @@ var searchMoive = function () {
   }).done(moiveList);
 };
 
+var showError = function(error) {
+  var $msg = $('<div class="error"/>').text(error);
+    $msg.appendTo('.error');
+}
 
 var moiveList = function (result) {
   if(result.Response === 'False'){
-    var $msg = $('<div class="error"/>').text("Sorry, there is no such movie!");
-    $msg.appendTo('.list_box');
+    showError("Sorry, there is no such movie!");    
   } else if (result.Search.length === 1) {
       addMovie(result.Search[0]);
       searchInfo($('.list')[0]);
@@ -31,8 +34,7 @@ var addMovie = function (movie) {
 var infoList = function (result) {
   var url = result.Poster
   if (url === "N/A") {
-    var $msg = $('<div class="error"/>').text("This movie doesn't have a poster.");
-    $msg.appendTo('.info');
+    showError("This movie doesn't have a poster.");
   } else {
       var $img = $('<img>').attr('src', url);
       $img.appendTo('.info');  
