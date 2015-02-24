@@ -12,6 +12,9 @@ var moiveList = function (result) {
   if(result.Response === 'False'){
     var $msg = $('<div class="error"/>').text("Sorry, there is no such movie!");
     $msg.appendTo('.list_box');
+  } else if (result.Search.length === 1) {
+      addMovie(result.Search[0]);
+      searchInfo($('.list')[0]);
   } else {
       $.each(result.Search, function(index, movie) {
       addMovie(movie);
