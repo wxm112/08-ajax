@@ -1,0 +1,36 @@
+body {
+  color: #6682EA;
+}
+
+h1 {
+  text-align: center;
+}
+
+input {
+  width: 200px;
+  height: 20px;
+  border-radius: 10px;
+}
+
+button {
+  background-color: #6682EA;
+  border-radius: 5px;
+}
+
+label {
+  font-size: 20px;
+}
+
+.container {
+  max-width: 960px;
+  height: 80%;
+  border: 1px solid #6682EA;
+  margin: 50px auto;  
+  background-color: #D0CB99;
+}
+
+.search_box {
+  text-align: center;
+}
+
+
