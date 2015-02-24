@@ -14,11 +14,16 @@ var moiveList = function (result) {
     $msg.appendTo('.list_box');
   } else {
       $.each(result.Search, function(index, movie) {
-      var $title = $('<button class="list"/>').text(movie.Title);
-      $title.appendTo('.list_box');
+      addMovie(movie);
       });
     };
 };
+
+var addMovie = function (movie) {
+  var $title = $('<button class="list"/>').text(movie.Title);
+      $title.appendTo('.list_box');
+};
+
 
 var infoList = function (result) {
   var url = result.Poster
@@ -29,6 +34,14 @@ var infoList = function (result) {
       var $img = $('<img>').attr('src', url);
       $img.appendTo('.info');  
     }; 
+};
+
+var searchInfo = function(movie){
+  var title = $(movie).text();
+      $.getJSON(omdbapi, {
+        t: title,
+        plot: 'full',
+      }).done(infoList);
 };
 
 $(document).ready(function(){
@@ -42,10 +55,6 @@ $(document).ready(function(){
 
   $('.list_box').on('click', 'button', function () {
     $('.info').empty();
-    var title = $(this).text();
-      $.getJSON(omdbapi, {
-        t: title,
-        plot: 'full',
-      }).done(infoList);
+    searchInfo(this);
   });
 });
