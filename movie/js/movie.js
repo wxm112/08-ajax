@@ -72,5 +72,6 @@ $(document).ready(function(){
     $('.info').empty();
     $('.error').empty();
     searchInfo(this);
+    $('#query').focus();
   });
 });
