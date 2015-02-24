@@ -49,17 +49,28 @@ var searchInfo = function(movie){
       }).done(infoList);
 };
 
-$(document).ready(function(){
-  $('#submit').on('click', function () {
+var submitFn = function () {
     $('.list_box').empty();
     $('.info').empty();
+    $('.error').empty();
     searchMoive();
     $('#query').val("");
     $('#query').focus();
-  }); 
+  };
+
+$(document).ready(function(){
+
+  $('#submit').on('click', submitFn); 
+  
+  $(document).on('keypress', function(event) {
+    if (event.which === 13) {
+      submitFn();
+    };
+  });
 
   $('.list_box').on('click', 'button', function () {
     $('.info').empty();
+    $('.error').empty();
     searchInfo(this);
   });
 });
