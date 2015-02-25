@@ -1,5 +1,6 @@
 require 'sinatra'
 require 'sinatra/reloader'
+require 'json'
 
 get '/' do
   erb :index
@@ -7,7 +8,7 @@ end
 
 
 get '/bros' do
-  %w{Gummo}.sample
+  %w{Groucho Harpo Chico Gummo}.sample
 end
 
 get '/lotto' do
@@ -18,4 +19,14 @@ end
 get '/slow' do
  sleep 10
  "haha" * Random.rand(1..10)
+end
+
+get '/getjson' do
+  content_type :json
+  data = {
+    :status => 'hunky dory',
+    :luckyNumber => Random.rand(1..1000),
+    :currentTime => Time.now
+  }
+  data.to_json
 end
