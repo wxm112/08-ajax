@@ -16,11 +16,10 @@ class TasksController < ApplicationController
   end
 
   def create
-    @task = Task.new task_params
-    if @task.save
-      redirect_to @task
-    else
-      render :new
+    @task = Task.create task_params
+    respond_to do |format|
+      format.html {redirect_to @task}
+      format.json {render :json => Task.all}
     end
   end
 
@@ -38,6 +37,13 @@ class TasksController < ApplicationController
     task = Task.find params[:id]
     task.destroy
     redirect_to root_path
+  end
+
+  def toggle_completed
+    task = Task.find params[:id]
+    task.completed = !task.completed
+    task.save
+    render :json => { :status => 'ok' }
   end
 
   private

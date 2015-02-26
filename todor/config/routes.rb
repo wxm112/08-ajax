@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
   root :to =>'tasks#landing'
-  resources :tasks, :only => [:index, :show, :edit,:new]
+  resources :tasks 
+  post '/tasks/:id/completed' => 'tasks#toggle_completed'
 end
