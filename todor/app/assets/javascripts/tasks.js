@@ -1,23 +1,23 @@
 var taskApp = {
-  createTask: function(event) {
-    event.preventDefault();
+  // createTask: function(event) {
+  //   event.preventDefault();
 
-    $.ajax('/tasks', {
-      type: 'POST',
-      dataType: 'JSON',
-      data: {
-        "task[title]": $('#task_title').val(),
-        "task[description]": $('#task_description').val(),
-        "task[completed]": $('#task_completed:checked').val()
-      }
-    }).done(function (tasks) {
-      taskApp.tasks = tasks;
-      taskApp.renderTasks();
-      $('#task_title').val('').focus();
-      $('#task_description').val('');
-      $('#task_completed').removeProp('checked');
-    })
-  },
+  //   $.ajax('/tasks', {
+  //     type: 'POST',
+  //     dataType: 'JSON',
+  //     data: {
+  //       "task[title]": $('#task_title').val(),
+  //       "task[description]": $('#task_description').val(),
+  //       "task[completed]": $('#task_completed:checked').val()
+  //     }
+  //   }).done(function (tasks) {
+  //     taskApp.tasks = tasks;
+  //     taskApp.renderTasks();
+  //     $('#task_title').val('').focus();
+  //     $('#task_description').val('');
+  //     $('#task_completed').removeProp('checked');
+  //   })
+  // },
 
   toggle_completed: function(event) {
     var $li = $(this).parent();
@@ -58,32 +58,19 @@ var taskApp = {
     }
   }
 
-  // taskHTML: function (task) {
-  //   var $li = $('<li/>');
-  //   $li.attr('data-task-id', task.id);
-  //   var $span = $('<span/>').text(task.title).attr('title', task.description);
-  //   var $completed = $('<input>', { type: 'checkbox' });
-  //   if (task.completed) {
-  //     $completed.attr('checked', 'checked');
-  //   }
-  //   var $delete = $('<span>').addClass('delete').html(' &#x2718;');
-  //   $li.append($span);
-  //   $li.prepend($completed);
-  //   $li.append($delete);
-  //   return $li;
-  //   }
-
   };
 
 $(document).ready(function (){
   taskApp.taskHTML = Handlebars.compile( $('#taskTemplate').html() );
   taskApp.loadTasks();
 
-  $('#new_task').on('submit', taskApp.createTask);
+  // $('#new_task').on('submit', taskApp.createTask);
 
   //Requires even delegation because tasks are added to the page dynamically.
   $('#tasks').on('click', '.delete', taskApp.deleteTask);
 
   $('#tasks').on('click', ':checkbox', taskApp.toggle_completed);
+
+  $('#new_task').on('ajax:success', taskApp.loadTasks);
 
 });
